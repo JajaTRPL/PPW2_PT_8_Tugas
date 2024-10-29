@@ -18,6 +18,23 @@
     <div class="container mt-5">
     <a href="{{ route('buku.create')}}" class="btn btn-primary float-end">Tambah Buku</a>
 
+        @if (Auth::check())
+            @if (Auth::user()->level == "admin")
+                <div class="alert alert-success mt-3">
+                    Selamat datang, admin.
+                </div>
+            @else
+                <div class="alert alert-warning mt-3">
+                    Anda tidak memiliki akses sebagai admin.
+                </div>
+            @endif
+        @else
+            <div class="alert alert-danger mt-3">
+                Silakan login untuk mengakses halaman ini.
+            </div>
+        @endif
+
+
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}

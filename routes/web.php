@@ -3,7 +3,6 @@
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\BukuController;
 
-// Tambahkan middleware 'auth' untuk grup route Buku
 Route::middleware(['auth'])->group(function () {
     Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
@@ -22,6 +21,9 @@ Route::controller(LoginRegisterController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('dashboard'); 
     Route::post('/logout', 'logout')->name('logout');
 });
+
+Route::resource('books', BukuController::class)->except('show')->middleware('auth');
+Route::get('admin', [BukuController::class, 'admin'])->name('admin')->middleware('role');
 
 
 
